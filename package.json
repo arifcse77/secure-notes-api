@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/local-server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/local-server.js",
     "seed:admin": "tsx src/scripts/seed-admin.ts"
   },
   "dependencies": {
