@@ -1,8 +1,19 @@
 import { ErrorRequestHandler } from "express";
 import mongoose from "mongoose";
+import { ZodError } from "zod";
 import { HttpError } from "../utils/http";
 
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  if (error instanceof ZodError) {
+    res.status(400).json({
+      error: "Validation failed",
+      details: error.issues.map(issue => ({
+        field: issue.path.join("."),
+        message: issue.message
+      }))
+    });
+    return;
+  }
   if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: "Validation failed", details: error.message }); return;
   }
